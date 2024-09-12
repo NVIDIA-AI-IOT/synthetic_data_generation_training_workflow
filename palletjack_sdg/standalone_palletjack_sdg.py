@@ -190,17 +190,17 @@ def update_semantics(stage, keep_semantics=[]):
                     sem = Semantics.SemanticsAPI.Get(prim, instance_name)
                     type_attr = sem.GetSemanticTypeAttr()
                     data_attr = sem.GetSemanticDataAttr()
+                  
+                    if data_attr.Get() in keep_semantics:
+                        print(f"Semantic class {data_attr.Get()} will be kept!")
+                        break
 
+                    print(f"Removing semantic class {data_attr.Get()}!")
 
-                    for semantic_class in keep_semantics:
-                    # Check for our data classes needed for the model
-                        if data_attr.Get() == semantic_class:
-                            continue
-                        else:
-                            # remove semantics of all other prims
-                            prim.RemoveProperty(type_attr.GetName())
-                            prim.RemoveProperty(data_attr.GetName())
-                            prim.RemoveAPI(Semantics.SemanticsAPI, instance_name)
+                    # remove semantics for this prim
+                    prim.RemoveProperty(type_attr.GetName())
+                    prim.RemoveProperty(data_attr.GetName())
+                    prim.RemoveAPI(Semantics.SemanticsAPI, instance_name)
     
 
 # needed for loading textures correctly
