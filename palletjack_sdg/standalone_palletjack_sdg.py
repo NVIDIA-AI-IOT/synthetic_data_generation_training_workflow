@@ -308,10 +308,11 @@ def main():
                             scale=rep.distribution.uniform((0.01, 0.01, 0.01), (0.01, 0.01, 0.01)))
 
         # Modify the pose of all the distractors in the scene
-        with rep_distractor_group:
-            rep.modify.pose(position=rep.distribution.uniform((-6, -6, 0), (6, 12, 0)),
-                                rotation=rep.distribution.uniform((0, 0, 0), (0, 0, 360)),
-                                scale=rep.distribution.uniform(1, 1.5))
+        if args.distractors != "None":
+            with rep_distractor_group:
+                rep.modify.pose(position=rep.distribution.uniform((-6, -6, 0), (6, 12, 0)),
+                                    rotation=rep.distribution.uniform((0, 0, 0), (0, 0, 360)),
+                                    scale=rep.distribution.uniform(1, 1.5))
 
         # Randomize the lighting of the scene
         with rep.get.prims(path_pattern="RectLight"):
